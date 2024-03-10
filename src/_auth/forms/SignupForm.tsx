@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Link } from "react-router-dom"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { SignupValidation } from "@/lib/validation"
@@ -13,9 +14,13 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Loader } from "lucide-react"
+import { createUserAccount } from "@/lib/appwrite/api"
 
 
 const SignupForm = () => {
+  const isLoading = false
+
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
     defaultValues: {
@@ -27,10 +32,10 @@ const SignupForm = () => {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof SignupValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof SignupValidation>) {
+    const newUser = await createUserAccount(values)
+    console.log(newUser)
+    
   }
 
   return (
@@ -99,7 +104,15 @@ const SignupForm = () => {
         />
 
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="shad-button_primary">
+          {isLoading ? (<div className="flex gap-2"><Loader/> Loading...</div>):"Sign Up"}
+          </Button>
+          <p className="text-primary text-light-1 text-center mt-1">
+            Already have an account.
+            <Link to="/sign-in" className="text-primary-500
+            text-small-semibold ml-1 ">Log In</Link>
+
+          </p>
       </form>
       </div>
     </Form>
