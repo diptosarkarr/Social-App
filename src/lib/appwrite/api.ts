@@ -11,7 +11,8 @@ export async function createUserAccount(user: INewUser) {
             user.password,
             user.name
 
-        );
+        )
+
         if(!newAccount) throw Error
         const avaterUrl = avatars.getInitials(user.name)
         const newUser = await saveUserToDB({
@@ -19,7 +20,7 @@ export async function createUserAccount(user: INewUser) {
             name: newAccount.name,
             email: newAccount.email,
             username: user.username,
-            imageurl: avaterUrl,
+            imageUrl: avaterUrl,
 
         })
         return newUser;
@@ -32,11 +33,11 @@ export async function createUserAccount(user: INewUser) {
 }
 
 export async function saveUserToDB(user:{
-    accountId: string,
-    email: string,
-    name: string,
-    imageurl: URL,
-    username?: string
+    accountId: string;
+    email: string;
+    name: string;
+    imageUrl: URL;
+    username?: string;
 }) {
 
     try {
@@ -54,7 +55,7 @@ export async function saveUserToDB(user:{
     
 }
 
-export async function signInAccount(user: {email:string, password:string}) {
+export async function signInAccount(user: {email:string; password:string;}) {
 
     try {
         const session = await account.createEmailPasswordSession(user.email, user.password)
@@ -72,7 +73,7 @@ export async function getCurrentUser() {
      const currentUser = await databases.listDocuments(
         appwriteConfig.databaseId,
         appwriteConfig.usersCollectionId,
-        [Query.equal('accountID',currentAccount.$id)]
+        [Query.equal('accountId',currentAccount.$id)]
      )
 
      if(!currentUser) throw Error

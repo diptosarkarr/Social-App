@@ -56,11 +56,11 @@ const navigate = useNavigate()
 useEffect(()=>{
     
 if(
-    localStorage.getItem('cookieFallback')=== '[]' 
-    //localStorage.getItem('cookieFallback')=== null
+    localStorage.getItem('cookieFallback') === '[]' 
+    //localStorage.getItem('cookieFallback') === null
    
-)
-navigate('/sign-in')
+)navigate('/sign-in')
+
 checkAuthUser()
 },[])
 

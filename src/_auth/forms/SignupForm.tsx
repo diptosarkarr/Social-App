@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,7 +14,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Loader } from "lucide-react"
-import { createUserAccount } from "@/lib/appwrite/api"
 import { useToast } from "@/components/ui/use-toast"
 import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations"
 import { useUserContext } from "@/context/AuthContext"
@@ -26,8 +24,9 @@ const SignupForm = () => {
   const navigate = useNavigate()
   const {checkAuthUser, isLoading: isUserLoading} = useUserContext()
 
-  const {mutateAsync: createUserAccount, isPending: isCreatingAccount} = useCreateUserAccount();
+  const {mutateAsync: createUserAccount, isPending: isCreatingAccount} = useCreateUserAccount()
   const {mutateAsync:signInAccount, isPending:isSigningIn} = useSignInAccount()
+
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
     defaultValues: {
@@ -59,7 +58,7 @@ const SignupForm = () => {
       })
     }
     const isLoggedIn = await checkAuthUser();
-    if(!isLoggedIn){
+    if(isLoggedIn){
       form.reset();
       navigate('/')
     }else{
