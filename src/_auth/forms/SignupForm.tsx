@@ -54,7 +54,7 @@ const SignupForm = () => {
 
     if(!session){
       return toast({
-        title: "Sign in failed. Please try again 2 ."
+        title: "Sign in failed. Please try again."
       })
     }
     const isLoggedIn = await checkAuthUser();
