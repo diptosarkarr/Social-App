@@ -58,7 +58,7 @@ export async function saveUserToDB(user:{
 export async function signInAccount(user: {email:string; password:string;}) {
 
     try {
-        const session = await account.createEmailPasswordSession(user.email, user.password)
+        const session = await account.createEmailSession(user.email, user.password)
         return session;
     } catch (error) {
       console.log("I am here")  
@@ -74,8 +74,8 @@ export async function getCurrentUser() {
      
      const currentUser = await databases.listDocuments(
         appwriteConfig.databaseId,
-        appwriteConfig.usersCollectionId,
-        []
+        appwriteConfig.usersCollectionId
+        // [Query.equal("accountId", currentAccount.$id)]
      )
 
      if(!currentUser)  throw Error
